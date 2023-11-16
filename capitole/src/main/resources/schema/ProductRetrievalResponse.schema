@@ -1,0 +1,22 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "javaType": "com.capitole.inditex.v1.model.ProductRetrievalResponse",
+    "properties": {
+        "productId": {
+            "type": "object",
+            "javaType": "java.base.lang.Long",
+            "required": true
+        },
+        "brandId": {
+            "type": "object",
+            "javaType": "java.base.lang.Long",
+            "required": true
+        },
+        "applicationDate": {
+            "type": "string",
+            "format": "date-time",
+            "required": true
+        }
+    }
+}
