@@ -3,6 +3,7 @@ package com.capitole.inditex.v1.entity;
 import com.capitole.inditex.v1.entity.converter.CurrencyIsoTypeConverter;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -116,16 +117,17 @@ public class Price {
 
     @Override
     public String toString() {
-        return "Price{" +
-                "id=" + id +
-                ", brandId=" + brandId +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", priceListId=" + priceListId +
-                ", productId=" + productId +
-                ", priority=" + priority +
-                ", finalPrice=" + finalPrice +
-                ", currency=" + currency +
-                '}';
+        return new ToStringBuilder(this)
+                .appendSuper(super.toString())
+                .append("id", id)
+                .append("brandId", brandId)
+                .append("startDate", startDate)
+                .append("endDate", endDate)
+                .append("priceListId", priceListId)
+                .append("productId", productId)
+                .append("priority", priority)
+                .append("finalPrice", finalPrice)
+                .append("currency", currency)
+                .toString();
     }
 }

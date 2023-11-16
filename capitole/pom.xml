@@ -92,12 +92,13 @@
 				</configuration>
 				<executions>
 					<execution>
+						<id>v1</id>
 						<goals>
 							<goal>generate</goal>
 						</goals>
 						<configuration>
 							<sourceDirectory>${basedir}/src/main/resources/schema</sourceDirectory>
-							<outputDirectory>${basedir}/target</outputDirectory>
+							<outputDirectory>${basedir}/target/generated-sources/domain/v1</outputDirectory>
 							<targetPackage>com.capitole.inditex.v1.model</targetPackage>
 							<includeHashcodeAndEquals>false</includeHashcodeAndEquals>
 						</configuration>
