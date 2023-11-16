@@ -1,8 +1,10 @@
 package com.capitole.inditex.v1.entity;
 
+import com.capitole.inditex.v1.entity.converter.CurrencyIsoTypeConverter;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -14,23 +16,30 @@ public class Price {
     @SequenceGenerator(name = "price_id_sequence", sequenceName = "SEQ_PRICE_ID", allocationSize = 1)
     @Column(name = "ID")
     private Long id;
+    @NotNull
     @Column(name = "BRAND_ID")
     private Long brandId;
+    @NotNull
     @Column(columnDefinition = "TIMESTAMP")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime startDate;
     @Column(columnDefinition = "TIMESTAMP")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime endDate;
+    @NotNull
     @Column(name = "PRICE_LIST")
     private Long priceListId;
+    @NotNull
     @Column(name = "PRODUCT_ID")
     private Long productId;
     @Column(columnDefinition = "BOOLEAN DEFAULT false")
     private Boolean priority;
+    @NotNull
     @Column(name = "PRICE")
     private BigDecimal finalPrice;
+    @NotNull
     @Column(name = "CURR")
+    @Convert(converter = CurrencyIsoTypeConverter.class)
     private CurrencyIsoType currency;
 
     public Long getId() {

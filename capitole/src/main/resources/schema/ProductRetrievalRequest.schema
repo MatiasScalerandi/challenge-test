@@ -13,10 +13,10 @@
             "javaType": "java.base.lang.Long",
             "required": true
         },
-        "applicationDate": {
-             "type": "string",
-             "format": "date-time",
-             "required": true
+        "applicationStartDate": {
+            "type": "string",
+            "format": "date-time",
+            "required": true
         }
     }
 }
