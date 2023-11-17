@@ -1,15 +1,18 @@
 package com.capitole.inditex.v1.service;
 
 import com.capitole.inditex.v1.entity.Price;
+import com.capitole.inditex.v1.model.ProductItem;
+import com.capitole.inditex.v1.model.ProductRetrievalRequest;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 public interface PriceService {
 
-    Optional<Price> retrieveFinalPriceByBrandIdAndProductId(Long brandId, Long productId);
-    boolean isPriority(Date applicationStartDate, Price dbPrice);
-    List<Price> retrieveAllPricesByBrandId(Long brandId);
+    List<Price> retrievePricesByBrandIdAndProductId(Long brandId, Long productId);
+
+    ProductItem retrieveProductWithPriority(LocalDateTime requestDate, Price price);
+
+    ProductItem toApiProductItem(ProductRetrievalRequest retrievalRequest, List<ProductItem> items, ProductItem productItem);
 
 }

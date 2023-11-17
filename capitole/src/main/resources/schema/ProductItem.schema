@@ -1,0 +1,31 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "javaType": "com.capitole.inditex.v1.model.ProductItem",
+    "properties": {
+        "productId": {
+            "type": "integer",
+            "required": true
+        },
+        "brandId": {
+            "type": "integer",
+            "required": true
+        },
+        "rateToApply": {
+            "type": "number"
+        },
+        "applicationStartDate": {
+             "type": "string",
+             "format": "date",
+             "customPattern": "yyyy-MM-dd'T'HH:mm:ss",
+             "required": true
+        },
+        "applicationEndDate": {
+             "type": "string",
+             "format": "date-time"
+        },
+        "finalPrice": {
+            "type": "number"
+        }
+    }
+}

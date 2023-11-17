@@ -1,13 +1,14 @@
 package com.capitole.inditex.v1.service.impl;
 
 import com.capitole.inditex.v1.entity.Price;
+import com.capitole.inditex.v1.model.ProductItem;
+import com.capitole.inditex.v1.model.ProductRetrievalRequest;
 import com.capitole.inditex.v1.service.PriceService;
 import com.capitole.inditex.v1.service.component.PriceComponent;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PriceServiceImpl implements PriceService {
@@ -19,17 +20,17 @@ public class PriceServiceImpl implements PriceService {
     }
 
     @Override
-    public Optional<Price> retrieveFinalPriceByBrandIdAndProductId(Long brandId, Long productId) {
+    public List<Price> retrievePricesByBrandIdAndProductId(Long brandId, Long productId) {
         return component.retrieveFinalPriceByBrandIdAndProductId(brandId, productId);
     }
 
     @Override
-    public boolean isPriority(Date applicationStartDate, Price dbPrice) {
-        return component.isPriority(applicationStartDate, dbPrice);
+    public ProductItem retrieveProductWithPriority(LocalDateTime requestDate, Price price) {
+        return component.retrievePriceInDateRange(requestDate, price);
     }
 
     @Override
-    public List<Price> retrieveAllPricesByBrandId(Long brandId) {
-        return component.retrieveAllPricesByBrandId(brandId);
+    public ProductItem toApiProductItem(ProductRetrievalRequest retrievalRequest, List<ProductItem> items, ProductItem productItem) {
+        return component.toApiProductItem(retrievalRequest, items, productItem);
     }
 }
