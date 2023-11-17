@@ -1,5 +1,10 @@
 package com.capitole.inditex.v1.entity;
 
+/**
+ * Enumeration of currency
+ *
+ * @author Matias Scalerandi
+ */
 public enum CurrencyIsoType {
     EUR(0),
     USD(1);
@@ -15,8 +20,8 @@ public enum CurrencyIsoType {
     }
 
     public static CurrencyIsoType fromDbValue(Integer dbValue) {
-        for (CurrencyIsoType currencyIsoType : values()){
-            if (currencyIsoType.getDbValue().equals(dbValue)){
+        for (CurrencyIsoType currencyIsoType : values()) {
+            if (currencyIsoType.getDbValue().equals(dbValue)) {
                 return currencyIsoType;
             }
         }

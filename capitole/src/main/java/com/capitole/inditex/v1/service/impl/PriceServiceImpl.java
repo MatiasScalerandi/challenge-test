@@ -11,25 +11,44 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Implementation of {@link PriceService}
+ *
+ * @author Matias Scalerandi
+ */
 @Service
 public class PriceServiceImpl implements PriceService {
 
     private final PriceComponent component;
 
+    /**
+     * Constructor.
+     *
+     * @param component {@link PriceComponent}
+     */
     public PriceServiceImpl(PriceComponent component) {
         this.component = component;
     }
 
+    /**
+     * @see PriceService#retrievePricesByBrandIdAndProductId(Long, Long)
+     */
     @Override
     public List<Price> retrievePricesByBrandIdAndProductId(Long brandId, Long productId) {
         return component.retrieveFinalPriceByBrandIdAndProductId(brandId, productId);
     }
 
+    /**
+     * @see PriceService#retrieveProductWithPriority(LocalDateTime, Price)
+     */
     @Override
     public Optional<ProductItem> retrieveProductWithPriority(LocalDateTime requestDate, Price price) {
         return component.retrievePriceInDateRange(requestDate, price);
     }
 
+    /**
+     * @see PriceService#toApiProductItem(ProductRetrievalRequest, List, ProductItem)
+     */
     @Override
     public ProductItem toApiProductItem(ProductRetrievalRequest retrievalRequest, List<ProductItem> items, ProductItem productItem) {
         return component.buildApiProductItem(retrievalRequest, items, productItem);

@@ -61,7 +61,7 @@ public class PriceComponent {
     }
 
     public Double validateMaxRate(List<Price> pricesInRange) {
-        double rate = 0.0;
+        var rate = 0.0;
         Price price = getPrice(pricesInRange);
 
         if (Objects.nonNull(price)) {

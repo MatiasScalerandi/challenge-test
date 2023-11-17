@@ -9,6 +9,11 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * Entity class representing the Price data
+ *
+ * @author Matias Scalerandi
+ */
 @Entity
 @Table(name = "TBL_PRICES")
 public class Price {

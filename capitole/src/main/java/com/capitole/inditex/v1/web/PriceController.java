@@ -12,7 +12,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import com.capitole.inditex.v1.model.ProductRetrievalResponse;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 import javax.validation.Valid;
 import java.text.ParseException;
@@ -23,6 +29,11 @@ import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+/**
+ * Endpoints for Price related operations.
+ *
+ * @author Matias Scalerandi
+ */
 @RestController
 @RequestMapping(value = "/api/v1")
 public class PriceController {
@@ -30,17 +41,36 @@ public class PriceController {
     private final PriceService service;
     private final PriceAdapter adapter;
 
+    /**
+     * Constructor.
+     *
+     * @param service {@link PriceService}
+     * @param adapter {@link PriceAdapter}
+     */
     public PriceController(PriceService service, PriceAdapter adapter) {
         this.service = service;
         this.adapter = adapter;
     }
 
+    /**
+     * Friendly endpoint to validate if the application is running successfully
+     *
+     * @return pong {@link String}
+     */
     @GetMapping(value = "/ping",
             produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<String> ping() {
         return ResponseEntity.ok("pong");
     }
 
+    /**
+     * Endpoint for get a {@link ProductRetrievalResponse} by brand id and product id
+     *
+     * @param retrievalRequest the {@link ProductRetrievalRequest} request
+     * @param errors           errors of the {@link ProductRetrievalRequest}
+     * @return HTTP response entity consisting of status code and body
+     * @throws ParseException if the date have an invalid regex pattern
+     */
     @PostMapping(value = "/price",
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE)
