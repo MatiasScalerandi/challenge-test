@@ -47,22 +47,28 @@ public class PriceController {
     public ResponseEntity<Object> retrievePriceData(final @Valid @RequestBody ProductRetrievalRequest retrievalRequest,
                                                     final BindingResult errors) throws ParseException {
         if (errors.hasErrors()) {
+            LOGGER.error("Invalid ProductRetrievalRequest");
             throw new InvalidAnnotationException(errors);
         }
 
         List<ProductItem> items = new ArrayList<>();
         ProductItem productItem = new ProductItem();
 
+        LOGGER.info("Start date parsing");
         Date date = DateUtils.parseStringToDateType(retrievalRequest);
+        LocalDateTime localDateTimeRequest = DateUtils.convertToLocalDateTimeViaInstant(date);
+
         List<Price> prices = getPriceByBrandIdAndProductIdOrThrowException(retrievalRequest.getBrandId(),
                 retrievalRequest.getProductId(), date);
-
-        LocalDateTime localDateTimeRequest = DateUtils.convertToLocalDateTimeViaInstant(date);
+        LOGGER.debug("They are '{}' prices for brand id '{}' and product id '{}'",
+                prices.size(), retrievalRequest.getBrandId(), retrievalRequest.getProductId());
 
         buildProductItems(prices, localDateTimeRequest, items);
 
+        LOGGER.info("Start to building response with max rate");
         productItem = service.toApiProductItem(retrievalRequest, items, productItem);
 
+        LOGGER.info("Returning price info successfully");
         return new ResponseEntity<>(adapter.toApiProductRetrievalResponse(productItem), HttpStatus.OK);
     }
 

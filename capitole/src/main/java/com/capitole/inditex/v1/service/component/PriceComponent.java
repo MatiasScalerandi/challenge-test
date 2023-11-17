@@ -31,7 +31,8 @@ public class PriceComponent {
 
         List<Price> priceList = repository.findByBrandIdAndProductId(brandId, productId);
         if (priceList.isEmpty()) {
-            String message = String.format("The product with brand with id %d and product with id %d doesn't exists", brandId, productId);
+            LOGGER.error("Price it doesn't exists");
+            String message = String.format("The price with brand with id %d and product with id %d doesn't exists", brandId, productId);
             throw new PriceNotFoundException(message);
         }
         return priceList;
@@ -44,6 +45,7 @@ public class PriceComponent {
         boolean rateIsBetweenInDateRange = isBetween(requestDate, price.getStartDate(), price.getEndDate());
         ProductItem productItem = new ProductItem();
 
+        LOGGER.debug("rateIsBetweenInDateRange ? = '{}'", rateIsBetweenInDateRange);
         if (rateIsBetweenInDateRange) {
             buildProductItem(price, productItem);
         }
