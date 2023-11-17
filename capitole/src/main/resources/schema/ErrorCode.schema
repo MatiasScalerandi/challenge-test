@@ -1,0 +1,8 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "enum": [
+    "NOT_FOUND_PRICE",
+    "INVALID_ANNOTATION",
+    "ERROR_PARSING_DATE"
+    ]
+}

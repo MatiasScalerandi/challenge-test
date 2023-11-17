@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PriceServiceImpl implements PriceService {
@@ -25,12 +26,12 @@ public class PriceServiceImpl implements PriceService {
     }
 
     @Override
-    public ProductItem retrieveProductWithPriority(LocalDateTime requestDate, Price price) {
+    public Optional<ProductItem> retrieveProductWithPriority(LocalDateTime requestDate, Price price) {
         return component.retrievePriceInDateRange(requestDate, price);
     }
 
     @Override
     public ProductItem toApiProductItem(ProductRetrievalRequest retrievalRequest, List<ProductItem> items, ProductItem productItem) {
-        return component.toApiProductItem(retrievalRequest, items, productItem);
+        return component.buildApiProductItem(retrievalRequest, items, productItem);
     }
 }

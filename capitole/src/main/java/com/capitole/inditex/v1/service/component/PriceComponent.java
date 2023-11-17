@@ -5,6 +5,10 @@ import com.capitole.inditex.v1.entity.Price;
 import com.capitole.inditex.v1.model.ProductItem;
 import com.capitole.inditex.v1.model.ProductRetrievalRequest;
 import com.capitole.inditex.v1.repository.PriceRepository;
+import com.capitole.inditex.v1.service.exception.PriceNotFoundException;
+import com.google.common.base.Preconditions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -12,7 +16,7 @@ import java.util.*;
 
 @Component
 public class PriceComponent {
-
+    private final static Logger LOGGER = LoggerFactory.getLogger(PriceComponent.class);
     private final PriceRepository repository;
     private final PriceAdapter adapter;
 
@@ -22,35 +26,41 @@ public class PriceComponent {
     }
 
     public List<Price> retrieveFinalPriceByBrandIdAndProductId(Long brandId, Long productId) {
+        Preconditions.checkArgument(Objects.nonNull(brandId));
+        Preconditions.checkArgument(Objects.nonNull(productId));
+
         List<Price> priceList = repository.findByBrandIdAndProductId(brandId, productId);
         if (priceList.isEmpty()) {
-            //not found
+            String message = String.format("The product with brand with id %d and product with id %d doesn't exists", brandId, productId);
+            throw new PriceNotFoundException(message);
         }
         return priceList;
 
     }
 
-    public ProductItem retrievePriceInDateRange(LocalDateTime requestDate, Price price) {
+    public Optional<ProductItem> retrievePriceInDateRange(LocalDateTime requestDate, Price price) {
+        Preconditions.checkArgument(Objects.nonNull(price));
+
         boolean rateIsBetweenInDateRange = isBetween(requestDate, price.getStartDate(), price.getEndDate());
-        List<Price> pricesInRange = new ArrayList<>();
         ProductItem productItem = new ProductItem();
 
         if (rateIsBetweenInDateRange) {
-            pricesInRange.add(price);
-            Double maxRateToApply = validateMaxRate(pricesInRange);
-            productItem.setRateToApply(maxRateToApply);
+            buildProductItem(price, productItem);
         }
 
-        return productItem;
+        return Optional.of(productItem);
+    }
+
+    private void buildProductItem(Price price, ProductItem productItem) {
+        List<Price> pricesInRange = new ArrayList<>();
+        pricesInRange.add(price);
+        Double maxRateToApply = validateMaxRate(pricesInRange);
+        productItem.setRateToApply(maxRateToApply);
     }
 
     public Double validateMaxRate(List<Price> pricesInRange) {
         double rate = 0.0;
-
-        Price price = pricesInRange
-                .stream()
-                .max(Comparator.comparing(Price::getFinalPrice))
-                .orElse(null);
+        Price price = getPrice(pricesInRange);
 
         if (Objects.nonNull(price)) {
             rate = price.getFinalPrice().doubleValue();
@@ -58,7 +68,14 @@ public class PriceComponent {
         return rate;
     }
 
-    public ProductItem toApiProductItem(ProductRetrievalRequest retrievalRequest, List<ProductItem> items, ProductItem productItem) {
+    private static Price getPrice(List<Price> pricesInRange) {
+        return pricesInRange
+                .stream()
+                .max(Comparator.comparing(Price::getFinalPrice))
+                .orElse(null);
+    }
+
+    public ProductItem buildApiProductItem(ProductRetrievalRequest retrievalRequest, List<ProductItem> items, ProductItem productItem) {
         if (!items.isEmpty()) {
             double maxRateToApply = getMaxRate(items);
             productItem = adapter.requestToProductItem(retrievalRequest);
