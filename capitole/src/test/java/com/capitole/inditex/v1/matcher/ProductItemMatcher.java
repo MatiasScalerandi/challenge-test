@@ -1,26 +1,25 @@
 package com.capitole.inditex.v1.matcher;
 
-import com.capitole.inditex.v1.model.ProductRetrievalResponse;
+import com.capitole.inditex.v1.model.ProductItem;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 
 import java.util.Objects;
 
 /**
- * TypeSafe matcher for {@link ProductRetrievalResponse}
+ * TypeSafe matcher for {@link ProductItem}
  *
  * @author Matias Scalerandi
  */
-public class ProductRetrievalResponseMatcher extends TypeSafeMatcher<ProductRetrievalResponse> {
-
-    private final ProductRetrievalResponse expected;
+public class ProductItemMatcher extends TypeSafeMatcher<ProductItem> {
+    private final ProductItem expected;
 
     /**
      * Constructor.
      *
-     * @param expected {@link ProductRetrievalResponse}
+     * @param expected {@link ProductItem}
      */
-    public ProductRetrievalResponseMatcher(ProductRetrievalResponse expected) {
+    public ProductItemMatcher(ProductItem expected) {
         this.expected = expected;
     }
 
@@ -28,7 +27,7 @@ public class ProductRetrievalResponseMatcher extends TypeSafeMatcher<ProductRetr
      * @see TypeSafeMatcher#matchesSafely(Object)
      */
     @Override
-    protected boolean matchesSafely(ProductRetrievalResponse actual) {
+    protected boolean matchesSafely(ProductItem actual) {
         return Objects.equals(actual.getProductId(), expected.getProductId())
                 && Objects.equals(actual.getRateToApply(), expected.getRateToApply())
                 && Objects.equals(actual.getFinalPrice(), expected.getFinalPrice())

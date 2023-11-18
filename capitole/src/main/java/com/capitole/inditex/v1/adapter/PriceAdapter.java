@@ -6,6 +6,8 @@ import com.capitole.inditex.v1.model.ProductRetrievalRequest;
 import com.capitole.inditex.v1.model.ProductRetrievalResponse;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 /**
  * Adapter between the internal and API model
  *
@@ -32,13 +34,18 @@ public class PriceAdapter {
      * @return the {@link ProductRetrievalResponse} API object model
      */
     public ProductRetrievalResponse toApiProductRetrievalResponse(ProductItem item) {
-        return new ProductRetrievalResponse()
-                .withProductId(item.getProductId())
-                .withBrandId(item.getBrandId())
-                .withApplicationStartDate(item.getApplicationStartDate())
-                .withApplicationEndDate(item.getApplicationEndDate())
-                .withFinalPrice(item.getFinalPrice())
-                .withRateToApply(item.getRateToApply());
+        ProductRetrievalResponse response = new ProductRetrievalResponse();
+        if (Objects.nonNull(item)) {
+            response = new ProductRetrievalResponse()
+                    .withProductId(item.getProductId())
+                    .withBrandId(item.getBrandId())
+                    .withApplicationStartDate(item.getApplicationStartDate())
+                    .withApplicationEndDate(item.getApplicationEndDate())
+                    .withFinalPrice(item.getFinalPrice())
+                    .withRateToApply(item.getRateToApply());
+        }
+
+        return response;
     }
 
     /**
@@ -48,7 +55,11 @@ public class PriceAdapter {
      * @return the {@link ProductItem} API object model
      */
     public ProductItem requestToProductItem(ProductRetrievalRequest request) {
-        return mapper.requestToProductItem(request)
-                .withRateToApply(request.getFinalPrice());
+        ProductItem item = new ProductItem();
+        if (Objects.nonNull(request)) {
+            item = mapper.requestToProductItem(request)
+                    .withRateToApply(request.getFinalPrice());
+        }
+        return item;
     }
 }
