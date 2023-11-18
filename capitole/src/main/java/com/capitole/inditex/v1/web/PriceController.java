@@ -4,6 +4,7 @@ import com.capitole.inditex.v1.adapter.PriceAdapter;
 import com.capitole.inditex.v1.entity.Price;
 import com.capitole.inditex.v1.model.ProductItem;
 import com.capitole.inditex.v1.model.ProductRetrievalRequest;
+import com.capitole.inditex.v1.model.ProductRetrievalResponse;
 import com.capitole.inditex.v1.service.PriceService;
 import com.capitole.inditex.v1.service.exception.InvalidAnnotationException;
 import com.capitole.inditex.v1.util.DateUtils;
@@ -12,13 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import com.capitole.inditex.v1.model.ProductRetrievalResponse;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestBody;
-
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.text.ParseException;
