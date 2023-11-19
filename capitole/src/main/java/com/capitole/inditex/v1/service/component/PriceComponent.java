@@ -40,8 +40,6 @@ public class PriceComponent {
     }
 
     public Optional<ProductItem> retrievePriceInDateRange(LocalDateTime requestDate, Price price) {
-        Preconditions.checkArgument(Objects.nonNull(price));
-
         boolean rateIsBetweenInDateRange = isBetween(requestDate, price.getStartDate(), price.getEndDate());
         ProductItem productItem = new ProductItem();
 
@@ -78,6 +76,7 @@ public class PriceComponent {
     }
 
     public ProductItem buildApiProductItem(ProductRetrievalRequest retrievalRequest, List<ProductItem> items, ProductItem productItem) {
+        Preconditions.checkArgument(Objects.nonNull(retrievalRequest));
         if (!items.isEmpty()) {
             double maxRateToApply = getMaxRate(items);
             productItem = adapter.requestToProductItem(retrievalRequest);

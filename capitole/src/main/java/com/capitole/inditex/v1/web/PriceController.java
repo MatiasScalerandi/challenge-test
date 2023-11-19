@@ -13,11 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.text.ParseException;
@@ -25,6 +21,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+import java.util.function.Predicate;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -103,6 +101,11 @@ public class PriceController {
 
     private void buildProductItems(List<Price> prices, LocalDateTime localDateTimeRequest, List<ProductItem> items) {
         prices.forEach(p -> service.retrieveProductWithPriority(localDateTimeRequest, p)
+                .stream()
+                .filter(Objects::nonNull)
+                .filter(item -> productWithMaxRate()
+                        .test(item))
+                .findFirst()
                 .ifPresent(items::add));
     }
 
@@ -110,4 +113,7 @@ public class PriceController {
         return service.retrievePricesByBrandIdAndProductId(brandId, productId);
     }
 
+    private Predicate<ProductItem> productWithMaxRate() {
+        return item -> Objects.nonNull(item.getRateToApply());
+    }
 }

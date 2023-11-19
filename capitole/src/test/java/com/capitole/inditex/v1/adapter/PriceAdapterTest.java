@@ -18,7 +18,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.text.ParseException;
 import java.util.Date;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -35,10 +34,9 @@ class PriceAdapterTest {
     private ProductItem productItem;
     private ProductRetrievalResponse expected;
     private ProductRetrievalRequest request;
-    private final static String SIMPLE_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
 
     @BeforeEach
-    void init() throws ParseException {
+    void init() {
         productItem = new ProductItemBuilder()
                 .mockWithBasicData("2020-06-15T16:00:00", new Date())
                 .build();
