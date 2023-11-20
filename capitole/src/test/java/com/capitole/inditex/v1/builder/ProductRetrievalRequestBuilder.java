@@ -27,12 +27,12 @@ public class ProductRetrievalRequestBuilder {
         return this;
     }
 
-    public ProductRetrievalRequestBuilder withApplicationStartDate(final Date date) {
-        instance.setApplicationEndDate(date);
+    public ProductRetrievalRequestBuilder withApplicationStartDate(final String date) {
+        instance.setApplicationStartDate(date);
         return this;
     }
 
-    public ProductRetrievalRequestBuilder mockWithBrandIdAndProductId(final Date date) {
+    public ProductRetrievalRequestBuilder mockWithBrandIdAndProductId(final String date) {
         return new ProductRetrievalRequestBuilder()
                 .withBrandId(1L)
                 .withProductId(35455L)

@@ -89,7 +89,7 @@ public class HandlerControllerAdvice {
     @ResponseBody
     public ErrorResponse handleIllegalArgumentException(IllegalArgumentException e) {
         return new ErrorResponse()
-                .withCode(ErrorCode.ERROR_PARSING_DATE.name())
+                .withCode(ErrorCode.INVALID_ANNOTATION.name())
                 .withMessage(e.getMessage());
     }
 }

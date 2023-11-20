@@ -45,17 +45,16 @@ public class PriceServiceImplTest {
                 .build();
 
         ProductRetrievalRequest retrievalRequest = new ProductRetrievalRequestBuilder()
-                .mockWithBrandIdAndProductId(new Date())
+                .mockWithBrandIdAndProductId("2020-06-15T16:00:00")
                 .build();
 
         Mockito.doReturn(productItem)
                 .when(component)
                 .buildApiProductItem(retrievalRequest,
-                        Collections.singletonList(productItem), productItem);
+                        Collections.singletonList(productItem));
 
         //When
-        ProductItem response = tested.toApiProductItem(retrievalRequest, Collections.singletonList(productItem),
-                productItem);
+        ProductItem response = tested.toApiProductItem(retrievalRequest, Collections.singletonList(productItem));
 
         //Then
         Assertions.assertNotNull(response);
@@ -71,8 +70,7 @@ public class PriceServiceImplTest {
 
         //When
         IllegalArgumentException response = assertThrows(IllegalArgumentException.class, () ->
-                tested.toApiProductItem(null, Collections.singletonList(productItem),
-                        productItem));
+                tested.toApiProductItem(null, Collections.singletonList(productItem)));
 
         assertAll(
                 //Then

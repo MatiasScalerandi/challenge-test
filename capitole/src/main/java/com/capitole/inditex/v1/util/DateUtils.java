@@ -1,6 +1,7 @@
 package com.capitole.inditex.v1.util;
 
 import com.capitole.inditex.v1.model.ProductRetrievalRequest;
+import com.google.common.base.Preconditions;
 import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
@@ -11,6 +12,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Helper to handle and parse {@link Date} to {@link LocalDateTime}
@@ -35,6 +37,7 @@ public class DateUtils {
     }
 
     public static Date parseStringToDateType(ProductRetrievalRequest retrievalRequest) throws ParseException {
+        Preconditions.checkArgument(Objects.nonNull(retrievalRequest.getApplicationStartDate()), "'date' cannot be null");
         isValidLocalDate(retrievalRequest.getApplicationStartDate(), DATE_TIME_FORMATTER);
         return new SimpleDateFormat(SIMPLE_DATE_FORMAT).parse(retrievalRequest.getApplicationStartDate());
     }

@@ -52,12 +52,11 @@ public class PriceServiceImpl implements PriceService {
     }
 
     /**
-     * @see PriceService#toApiProductItem(ProductRetrievalRequest, List, ProductItem)
+     * @see PriceService#toApiProductItem(ProductRetrievalRequest, List)
      */
     @Override
-    public ProductItem toApiProductItem(ProductRetrievalRequest retrievalRequest, List<ProductItem> items, ProductItem productItem) {
+    public ProductItem toApiProductItem(ProductRetrievalRequest retrievalRequest, List<ProductItem> items) {
         Preconditions.checkArgument(Objects.nonNull(retrievalRequest), "'retrievalRequest' cannot be null");
-        Preconditions.checkArgument(Objects.nonNull(productItem), "'productItem' cannot be null");
-        return component.buildApiProductItem(retrievalRequest, items, productItem);
+        return component.buildApiProductItem(retrievalRequest, items);
     }
 }

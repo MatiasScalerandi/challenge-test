@@ -37,6 +37,6 @@ public interface PriceService {
      *
      * @return Retrieve the {@link ProductItem} with max rate
      */
-    ProductItem toApiProductItem(ProductRetrievalRequest retrievalRequest, List<ProductItem> items, ProductItem productItem);
+    ProductItem toApiProductItem(ProductRetrievalRequest retrievalRequest, List<ProductItem> items);
 
 }

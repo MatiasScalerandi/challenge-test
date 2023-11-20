@@ -75,8 +75,8 @@ public class PriceComponent {
                 .orElse(null);
     }
 
-    public ProductItem buildApiProductItem(ProductRetrievalRequest retrievalRequest, List<ProductItem> items, ProductItem productItem) {
-        Preconditions.checkArgument(Objects.nonNull(retrievalRequest));
+    public ProductItem buildApiProductItem(ProductRetrievalRequest retrievalRequest, List<ProductItem> items) {
+        ProductItem productItem = new ProductItem();
         if (!items.isEmpty()) {
             double maxRateToApply = getMaxRate(items);
             productItem = adapter.requestToProductItem(retrievalRequest);

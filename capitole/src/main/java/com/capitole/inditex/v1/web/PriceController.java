@@ -79,21 +79,20 @@ public class PriceController {
         }
 
         List<ProductItem> items = new ArrayList<>();
-        ProductItem productItem = new ProductItem();
 
         LOGGER.info("Start date parsing");
         Date date = DateUtils.parseStringToDateType(retrievalRequest);
         LocalDateTime localDateTimeRequest = DateUtils.convertToLocalDateTimeViaInstant(date);
 
         List<Price> prices = getPriceByBrandIdAndProductIdOrThrowException(retrievalRequest.getBrandId(),
-                retrievalRequest.getProductId(), date);
+                retrievalRequest.getProductId());
         LOGGER.debug("They are '{}' prices for brand id '{}' and product id '{}'",
                 prices.size(), retrievalRequest.getBrandId(), retrievalRequest.getProductId());
 
         buildProductItems(prices, localDateTimeRequest, items);
 
         LOGGER.info("Start to building response with max rate");
-        productItem = service.toApiProductItem(retrievalRequest, items, productItem);
+        ProductItem productItem = service.toApiProductItem(retrievalRequest, items);
 
         LOGGER.info("Returning price info successfully");
         return new ResponseEntity<>(adapter.toApiProductRetrievalResponse(productItem), HttpStatus.OK);
@@ -109,11 +108,11 @@ public class PriceController {
                 .ifPresent(items::add));
     }
 
-    private List<Price> getPriceByBrandIdAndProductIdOrThrowException(Long brandId, Long productId, Date startDate) {
+    public List<Price> getPriceByBrandIdAndProductIdOrThrowException(Long brandId, Long productId) {
         return service.retrievePricesByBrandIdAndProductId(brandId, productId);
     }
 
-    private Predicate<ProductItem> productWithMaxRate() {
+    public Predicate<ProductItem> productWithMaxRate() {
         return item -> Objects.nonNull(item.getRateToApply());
     }
 }
